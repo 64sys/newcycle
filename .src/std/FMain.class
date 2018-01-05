@@ -99,49 +99,6 @@ Public Sub mnuAbout_Click()
 
 End
 
-Public Sub tobHelp_Click()
-
-  Dim strHtml As String
-
-  Dim strPDF As String
-  Dim strMD As String
-  Dim prsRM As Process
-  Dim prsMd As Process
-
-  strHtml = GEFUtility.DokuHtml(Application.Path)
-
-  If Exist("/tmp/pdf") Then
-    prsRM = Shell "rm -r -f /tmp/pdf"
-    While
-      prsRM.State = prsRM.Running
-      Wait 0.1
-    Wend
-  Endif
-
-  prsMd = Shell "mkdir -p /tmp/pdf"
-  While
-    prsMd.State = prsMd.Running
-    Wait 0.1
-  Wend
-
-  File.Save("/tmp/pdf/help.html", strHtml)
-
-  Copy "logo.png" To "/tmp/pdf/logo.png"
-  Wait 0.5
-
-  strPDF = GEFBatch.HTMLPDF("/tmp/pdf/help.html", "pandoc")
-  strMD = GEFBatch.HTMLMD("/tmp/pdf/help.html")
-
-  If Exist(strPDF) Then
-    Desktop.Open(strPDF)
-  Endif
-
-  If Exist(strMD) Then
-    Desktop.Open(strMD)
-  Endif
-
-End
-
 Public Sub tobPrint_Click()
 
   If Exist(strProd) Then
