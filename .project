@@ -1,0 +1,17 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.10.0
+Title=Nuevo ciclo
+Startup=GEFStarter
+Icon=logo.png
+Version=0.0.1
+Component=gb.image
+Component=gb.gui
+Component=gb.form
+Component=gb.settings
+Component=gb.pdf
+Description="Interface para el programa Pcal"
+Authors="Martín Belmonte."
+TabSize=2
+Translate=1
+Language=es
+Packager=1

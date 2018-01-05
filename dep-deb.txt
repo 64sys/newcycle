@@ -1,0 +1,4 @@
+pcal
+libimage-exiftool-perl
+pdftk
+imagemagick

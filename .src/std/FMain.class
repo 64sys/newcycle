@@ -1,0 +1,309 @@
+' Gambas class file
+
+'
+' Nuevo ciclo
+' Interface para el programa Pcal
+'
+' Copyright (C) Martín Belmonte.
+'
+' This program is free software; you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation; either version 2 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 51 Franklin St, Fifth Floor,
+' Boston, MA  02110-1301  USA
+'
+Private intYear As Integer
+Private intInit As Integer
+Private intQty As Integer
+Private strSeed As String
+Private strPscr As String
+Private strProd As String
+Private pdfFile As New PdfDocument
+Private intW As Integer
+Private intH As Integer
+Private bolLoaded As Boolean
+
+Public Sub Form_Open()
+
+  Dim int As Integer
+
+  hzsData.Layout = [1, 4, 1]
+
+  'ShowData(GEFStarter.stxVTitles)
+
+  intYear = CInt(Format(Now(), "yyyy"))
+
+  For int = 0 To 10
+    cmoYear.List.Add(CStr(intYear - 5 + int))
+  Next
+
+  cmoYear.Text = CStr(intYear)
+
+  For int = 1 To 12
+    cmoMonthInit.List.Add(CStr(int))
+  Next
+
+  cmoMonthInit.Text = "1"
+
+  For int = 1 To 12
+    cmoMonthQty.List.Add(CStr(int))
+  Next
+
+  cmoMonthQty.Text = "12"
+
+  cmoPaperSize.Add("a4")
+  cmoPaperSize.Add("letter")
+
+  cmoPaperSize.Text = "a4"
+  GEFStarter.stxProgVal[0] = "a4"
+
+  cmoPaperOrientation.Add("landscape")
+  cmoPaperOrientation.Add("portait")
+
+  cmoPaperOrientation.Text = "landscape"
+  GEFStarter.stxProgVal[1] = "landscape"
+
+  cmoPaperTextLanguage.Add("es")
+  cmoPaperTextLanguage.Add("fr")
+  cmoPaperTextLanguage.Add("it")
+  cmoPaperTextLanguage.Add("pr")
+
+  cmoPaperTextLanguage.Text = "es"
+  GEFStarter.stxProgVal[2] = "es"
+
+  cmoFirstDay.Add("moonday")
+  cmoFirstDay.Add("sunday")
+  cmoFirstDay.Text = "monday"
+  GEFStarter.stxProgVal[3] = "monday"
+
+End
+
+Public Sub tobAbout_Click()
+
+  GEFAbout.ShowModal()
+
+End
+
+Public Sub mnuAbout_Click()
+
+  GEFAbout.ShowModal()
+
+End
+
+Public Sub tobHelp_Click()
+
+  Dim strHtml As String
+
+  Dim strPDF As String
+  Dim strMD As String
+  Dim prsRM As Process
+  Dim prsMd As Process
+
+  strHtml = GEFUtility.DokuHtml(Application.Path)
+
+  If Exist("/tmp/pdf") Then
+    prsRM = Shell "rm -r -f /tmp/pdf"
+    While
+      prsRM.State = prsRM.Running
+      Wait 0.1
+    Wend
+  Endif
+
+  prsMd = Shell "mkdir -p /tmp/pdf"
+  While
+    prsMd.State = prsMd.Running
+    Wait 0.1
+  Wend
+
+  File.Save("/tmp/pdf/help.html", strHtml)
+
+  Copy "logo.png" To "/tmp/pdf/logo.png"
+  Wait 0.5
+
+  strPDF = GEFBatch.HTMLPDF("/tmp/pdf/help.html", "pandoc")
+  strMD = GEFBatch.HTMLMD("/tmp/pdf/help.html")
+
+  If Exist(strPDF) Then
+    Desktop.Open(strPDF)
+  Endif
+
+  If Exist(strMD) Then
+    Desktop.Open(strMD)
+  Endif
+
+End
+
+Public Sub tobPrint_Click()
+
+  If Exist(strProd) Then
+    CalendarPrint(strProd)
+  Endif
+
+End
+
+Public Sub CalendarPrint(strPath As String) ''Imprime el pdf que se le pasa como parametro
+
+  Shell "lp -o media=Custom.211x297mm -o DefaultBRDuplex=DuplexNoTumble -o BRResolution=600dpi " & strPath
+
+End
+
+Public Sub mnuExit_Click()
+
+  Me.Close
+
+End
+
+Public Sub Form_Close()
+
+  If GEFStarter.Terminator() = 1 Then
+    Me.Close
+  Else
+    Message.Error("No se han podido guardar los parametros del programa")
+  Endif
+
+End
+
+Public Sub mnuNew_Click()
+
+End
+
+'## Función principal que interactiua con pcal
+
+Public Function CreateConf() ''Crea el archivo de configuracion que se utilizara para crear el calendario
+
+  GEFStarter.stxProgVal[9] = cmoYear.Text
+  GEFStarter.stxProgVal[10] = cmoMonthInit.Text
+  GEFStarter.stxProgVal[11] = cmoMonthQty.Text
+
+  strSeed = GEFStarter.stxProgVal[7]
+  strPscr = GEFStarter.stxProgVal[8] &/ GEFStarter.stxProgVal[9] & ".ps"
+  strProd = GEFStarter.stxProgVal[8] &/ GEFStarter.stxProgVal[9] & ".pdf"
+
+  If Exist(strPscr) = True Then
+    Kill strPscr
+  Endif
+
+  If Exist(strProd) = True Then
+    Kill strProd
+  Endif
+
+  Print strSeed
+  Print strProd
+
+End
+
+Public Function LoadCalendar()
+
+  Dim strCmd As String
+  Dim img As Image
+  Dim pio As Picture
+
+  Dim intNpage, intWidthPage, intHeightPage As Integer
+
+  tobPrint.Enabled = False
+
+  CreateConf()
+  strCmd = "pcal"
+  'strCmd &= strSeed & " -o "
+  strCmd &= " -P " & GEFStarter.stxProgVal[0]
+
+  Select GEFStarter.stxProgVal[1]
+    Case "landscape"
+      strCmd &= " -l"
+  End Select
+  strCmd &= " -a " & GEFStarter.stxProgVal[2]
+  strCmd &= " -F " & GEFStarter.stxProgVal[3]
+  strCmd &= " -d Times-Roman/18"
+  strCmd &= " -t Times-Roman/30"
+  strCmd &= " -n Times-Roman/10"
+  strCmd &= " -o " & strPscr
+  strCmd &= " " & GEFStarter.stxProgVal[10]
+  strCmd &= " " & GEFStarter.stxProgVal[9]
+  strCmd &= " " & GEFStarter.stxProgVal[11]
+
+  Print strCmd
+
+  Shell strCmd Wait
+
+  Shell "ps2pdf " & strPscr & " " & strProd Wait
+
+  pdfFile.Open(strProd)
+
+  If pdfFile.Ready = True Then
+
+    intNpage = 1
+    intWidthPage = pdfFile[intNpage].Width
+    intHeightPage = pdfFile[intNpage].Height
+
+    img = pdfFile[intNpage].Image
+    img.Stretch(intW, intH)
+    pio = img.Picture
+
+    Wait 0.01
+    pix.Picture = pio
+    pix.Refresh
+    tobPrint.Enabled = True
+  Else
+    Message.Error("Error al intentar cargar el pdf")
+  Endif
+
+End
+
+Public Sub Parameters_Change()
+
+  If bolLoaded = True Then
+    CreateConf()
+    LoadCalendar()
+  Endif
+
+End
+
+Public Sub Form_Activate()
+
+  intW = (Me.W / 6) * 4
+  intH = intW * 0.7071
+
+  bolLoaded = True
+
+  CreateConf()
+
+  LoadCalendar()
+
+End
+
+Public Sub mnuReset_Click()
+
+  Reset()
+
+End
+
+Public Sub tobReset_Click()
+
+  Reset()
+
+End
+
+Public Sub Reset()
+
+  If Message.Question(
+      ("¿Desea restablecer los parametros originales?") & gb.NewLine &
+      ("Tenga en cuenta que si acepta los cambios que usted haya realizado en la configuracion se perderan."), "Aceptar", "Cancelar") = 1 Then
+    If Exist(GEFStarter.strAppPath) = True Then
+      Shell "rm -r " & GEFStarter.strAppPath Wait
+      Me.Close
+      GEFStarter.Main()
+
+    Endif
+
+  Endif
+
+End

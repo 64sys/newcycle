@@ -1,0 +1,259 @@
+' Gambas module file
+
+'
+' Nuevo ciclo
+' Interface para el programa Pcal
+'
+' Copyright (C) Martín Belmonte.
+'
+' This program is free software; you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation; either version 2 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program; if not, write to the Free Software
+' Foundation, Inc., 51 Franklin St, Fifth Floor,
+' Boston, MA  02110-1301  USA
+'
+
+Public stxProgKey As New String[]
+Public stxProgVal As New String[]
+Public strAppPath As String
+Public strAppName As String
+
+' Public strDBName As String
+' Public stxDBEngines As New String[]
+' Public stxDBPreloaded As New String[]
+' Public strDBDEfault As String
+Public stxPackages As New String[]
+'
+' Public strTemplate As String
+' Public stxTables As New String[]
+'
+' Public stxTableFields As New String[][] ''Lista de campos de las tablas
+'
+' Public stxViews As New String[] ''Lista de vistas
+' Public stxVTitles As New String[][] ' Lista de vistas mejorada con títulos "humanos" e iconos
+' Public stxViewFields As New String[][] ''Lista de campos de las vistas
+' Public stxFTitles As New String[][] ''Lista de títulos de los campos de las vistas y de las tablas
+' Public stxHeaders As New String[] ''<ul><li>0 Acronimo de dos letras "es"</li><li>1 Acronimo de tres letras "spa"</li><li>2 Nombre en inglés "Spanish"</li><li>3 Nombre nativo "Español"</li><li>4 Grupo del idioma "Indo-European"</li><li>5 Alfabeto "Latn" (latino)</li><li>6 Traducir [True/False]</li></ul>
+' Public stxFieldsTableCurrent As New String[] ''lista de campos para crear los botones de filtros
+' Public stxFieldsViewCurrent As New String[] ''lista de campos para crear los botones de filtros
+' 'Public resProgram As Result
+' Public strViewNameSqlCurrent As String
+' Public strViewNameHumanCurrent As String
+' Public strSQLCurrent As String
+'
+' Public stxFieldsToShow As New String[] ' Campos que se mostraran en las listas (gridview) para cada vista se rellena en updategrid cada vez que se selecciona una nueva categoria en el treeview.
+
+'## variables del Programa ##
+'
+'
+'////////////////////////////
+
+Public Sub Main()
+
+  Dim stxTmp As New Variant[][]
+  Dim intTmp As Integer
+  Dim intP As Integer
+  Dim intKey As Integer
+
+  strAppPath = User.Home &/ "." & Application.Name
+
+  ' Existencia de directorio de la aplicacion en el directorio home. Esto se ejecutara una unica vez.
+  ' Aqui se pueden agregar mas comprobaciones de este tipo para copia de archivos de configuracion y demas cosas similares
+  If Exist(strAppPath) = False Then
+    Mkdir strAppPath
+  Endif
+  Wait 0.05
+  If Exist(strAppPath &/ "README.md") = False Then
+    Copy "README.md" To strAppPath &/ "README.md"
+  Endif
+  If Exist(strAppPath &/ "logo.png") = False Then
+    Copy "logo.png" To strAppPath &/ "logo.png"
+  Endif
+  If Exist(strAppPath &/ "template.cfg") = False Then
+    Copy "template.cfg" To strAppPath &/ "template.cfg"
+  Endif
+
+  ' Carga de los parametros del prgrama conjuntamente con gb.settings./////////////////////////
+
+  If Initiator() = 1 Then
+    For intKey = 0 To stxProgKey.Max
+      stxProgVal[intKey] = Settings[stxProgKey[intKey], stxProgVal[intKey]]
+    Next
+  Endif
+
+  Select stxProgVal[7]
+    Case "T", "True"
+      Select Dependences() ' Estado de las dependencias.
+        Case 0
+          Message.Info("Algunas caracteristicas no funcionaran hasta que no instale las dependencias")
+        Case 1
+      End Select
+  End Select
+
+  FMain.Show()
+
+End
+
+Public Function Initiator() As Integer  ''Funcion que carga los parametros por defecto del programa. 1 ok, 0 Matrices iguales pero no se cargo todo -1 matrices distintas
+
+  Dim int As Integer
+
+  For int = 0 To 11
+
+    stxProgKey.Add("")
+    stxProgVal.Add("")
+  Next
+
+  stxProgKey[0] = "Program/Paper-Size"
+  stxProgVal[0] = Settings[stxProgKey[0], "a4"]
+
+  stxProgKey[1] = "Program/Paper-Orientation"
+  stxProgVal[1] = Settings[stxProgKey[1], strAppPath]
+
+  stxProgKey[2] = "Program/Text-Language"
+  stxProgVal[2] = Settings[stxProgKey[2], ""]
+
+  stxProgKey[3] = "Program/First-Day"
+  stxProgVal[3] = Settings[stxProgKey[3], ""]
+
+  stxProgKey[4] = "Program/Font-Type-1"
+  stxProgVal[4] = Settings[stxProgKey[4], "Times-Roman/18"]
+
+  stxProgKey[5] = "Program/Font-Type-2"
+  stxProgVal[5] = Settings[stxProgKey[5], "Times-Roman/30"]
+
+  stxProgKey[6] = "Program/Font-Type-3"
+  stxProgVal[6] = Settings[stxProgKey[6], "Times-Roman/10"]
+
+  stxProgKey[7] = "Program/File-cfg"
+  stxProgVal[7] = Settings[stxProgKey[7], strAppPath &/ "template.cfg"]
+
+  stxProgKey[8] = "Program/Application-Path"
+  stxProgVal[8] = Settings[stxProgKey[8], strAppPath]
+
+  stxProgKey[9] = "Program/Year"
+  stxProgVal[9] = Settings[stxProgKey[9], ""]
+
+  stxProgKey[10] = "Program/Month-Init"
+  stxProgVal[10] = Settings[stxProgKey[10], ""]
+
+  stxProgKey[11] = "Program/Month-Qty"
+  stxProgVal[11] = Settings[stxProgKey[11], ""]
+
+  If stxProgKey.Max = stxProgVal.Max Then
+    Return 1
+  Else
+    Return 0
+  Endif
+
+End
+
+Public Function Dependences() As Integer ''Analisis de dependencias, si hay paquetes que falta instalar se procede a instalarlos y la funcion retorna la cantidad remanente de paquetes, siendo cero si se instalaron todos.
+
+  Dim str As String
+  Dim strCmm As String
+
+  str &= ("Debes instalar los siguientes paquetes") & ":\n"
+
+  Select GEFSys.Distro()
+
+    Case "debian", "ubuntu", "mint"
+      strCmm = "sudo apt-get install "
+      If Exist("dep-deb.txt") = True Then
+        stxPackages = GEFUtility.FileLoad("dep-deb.txt")
+      Endif
+    Case "manjaro", "arch"
+      strCmm = "sudo pacman -S "
+      If Exist("arc.txt") = True Then
+        stxPackages = GEFUtility.FileLoad("arc.txt")
+      Else
+        If Exist("dep-deb.txt") = True Then
+          stxPackages = GEFUtility.FileLoad("dep-deb.txt")
+        Endif
+      Endif
+    Case "fedora", "redhat"
+      strCmm = "sudo dnf install "
+      If Exist("rht.txt") = True Then
+        stxPackages = GEFUtility.FileLoad("rht.txt")
+      Else
+        If Exist("dep-deb.txt") = True Then
+          stxPackages = GEFUtility.FileLoad("dep-deb.txt")
+        Endif
+      Endif
+
+    Case "gentoo"
+      strCmm = "sudo emerge -a "
+      If Exist("gto.txt") = True Then
+        stxPackages = GEFUtility.FileLoad("gto.txt")
+      Else
+        If Exist("dep-deb.txt") = True Then
+          stxPackages = GEFUtility.FileLoad("dep-deb.txt")
+        Endif
+      Endif
+
+    Case "suse", "opensuse"
+      strCmm = "sudo zipper install "
+      If Exist("osu.txt") = True Then
+        stxPackages = GEFUtility.FileLoad("osu.txt")
+      Else
+        If Exist("dep-deb.txt") = True Then
+          stxPackages = GEFUtility.FileLoad("dep-deb.txt")
+        Endif
+      Endif
+
+  End Select
+
+  If stxPackages.Count > 0 Then
+    stxPackages = GEFSys.PkgDep(stxPackages)
+    If stxPackages.Count > 0 Then ' Existen paquete que no estan instalados
+
+      File.Save("/tmp/apt.txt", str & strCmm & stxPackages.Join(" "))
+      Wait 1
+      Desktop.Open("/tmp/apt.txt")
+
+    Endif
+  Endif
+  Return stxPackages.Count
+
+End
+
+Public Function Savior() As String[] ''Funcion que guarda las configuraciones que se modificaron en el programa.
+
+  Dim int As Integer
+  Dim stx As New String[]
+
+  For int = 0 To stxProgKey.Max
+    Select Settings[stxProgKey[int]]
+      Case stxProgVal[int]
+      Case Else
+        Settings[stxProgKey[int]] = stxProgVal[int]
+        stx.Add(stxProgKey[int] & ": " & stxProgVal[int])
+    End Select
+  Next
+  Return stx
+
+End
+
+Public Function Terminator() As Integer ''Funcion que guarda las configuraciones que se modificaron en el programa antes de cerrarlo.
+
+  Dim int As Integer
+  ' Guardando los parametros del programa
+  For int = 0 To stxProgKey.Max
+    Settings[stxProgKey[int]] = stxProgVal[int]
+    Print "Guardando: " & stxProgKey[int] & ": " & stxProgVal[int]
+  Next
+
+  Settings.Save
+
+  Return 1
+
+End

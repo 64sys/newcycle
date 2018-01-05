@@ -1,0 +1,172 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,105,72)
+  Expand = True
+  Icon = Picture["logo.png"]
+  Arrangement = Arrange.Vertical
+  Padding = 2
+  { mnuActions Menu
+    #Translate = False
+    Text = "Archivo"
+    { mnuNew Menu
+      Text = ("Nuevo calendario")
+      Picture = Picture["icon:/22/new"]
+    }
+    { mnuConfig Menu
+      Text = ("Configuración")
+      Picture = Picture["icon:/22/properties"]
+      Visible = False
+    }
+    { mnuPrint Menu
+      Text = ("Imprimir")
+      Picture = Picture["icon:/22/print"]
+    }
+    { mnuReset Menu
+      Text = ("Restablecer parametros")
+      Picture = Picture["icon:/22/refresh"]
+    }
+    { mnuTerm Menu
+      Text = ("Terminal")
+      Picture = Picture["icon:/22/terminal"]
+      Visible = False
+    }
+    { mnuExit Menu
+      Text = ("Salir")
+      Picture = Picture["icon:/22/quit"]
+    }
+  }
+  { mnuInfo Menu
+    Text = ("Información")
+    { mnuHelp Menu
+      Text = ("Manual de ayuda")
+      Picture = Picture["icon:/22/help"]
+    }
+    { mnuDevHelp Menu
+      Text = ("Manual para el desarrollador")
+      Picture = Picture["icon:/22/development"]
+      Visible = False
+    }
+    { mnuAbout Menu
+      Text = ("Acerca de")
+      Picture = Picture["icon:/22/info"]
+    }
+  }
+  { Panel1 Panel
+    MoveScaled(1,1,103,5)
+    Arrangement = Arrange.Horizontal
+    { tobNew ToolButton
+      MoveScaled(0,0,5,5)
+      ToolTip = ("Nuevo")
+      Picture = Picture["icon:/22/new"]
+    }
+    { tobPrint ToolButton
+      MoveScaled(7,0,5,5)
+      Enabled = False
+      ToolTip = ("Imprimir")
+      Picture = Picture["icon:/22/print"]
+    }
+    { tobReset ToolButton
+      MoveScaled(19,0,5,5)
+      ToolTip = ("Restablecer parametros")
+      Picture = Picture["icon:/22/refresh"]
+    }
+    { Panel5 Panel
+      MoveScaled(71,0,7,5)
+      Expand = True
+    }
+    { tobAbout ToolButton
+      MoveScaled(96,0,5,5)
+      ToolTip = ("Acerca de")
+      Picture = Picture["icon:/22/info"]
+    }
+  }
+  { Panel3 Panel
+    MoveScaled(1,7,103,60)
+    Expand = True
+    Arrangement = Arrange.Vertical
+    Border = Border.Plain
+    { hzsData HSplit
+      MoveScaled(2,1,101,50)
+      Background = Color.Background
+      Expand = True
+      Border = False
+      { Panel4 Panel
+        MoveScaled(7,4,23,43)
+        Expand = True
+        Arrangement = Arrange.Vertical
+        { Panel6 Panel
+          MoveScaled(1,2,20,11)
+        }
+        { pnlDataTree Panel
+          MoveScaled(1,15,21,27)
+          Expand = True
+          Arrangement = Arrange.Horizontal
+          { trvCalendar TreeView
+            MoveScaled(2,8,16,14)
+            Background = Color.Background
+            Expand = True
+            Border = False
+          }
+          { Separator3 Separator
+            MoveScaled(19,3,0,22)
+          }
+        }
+      }
+      { pnlCalendar Panel
+        MoveScaled(36,4,45,44)
+        Expand = True
+        Arrangement = Arrange.Row
+        { pix PictureBox
+          MoveScaled(10,22,16,16)
+          AutoResize = True
+        }
+      }
+      { Panel7 Panel
+        MoveScaled(84,4,15,44)
+        Arrangement = Arrange.Vertical
+        { cmoPaperSize ComboBox Parameters
+          Name = "cmoPaperSize"
+          MoveScaled(2,8,12,4)
+        }
+        { cmoPaperOrientation ComboBox Parameters
+          Name = "cmoPaperOrientation"
+          MoveScaled(2,13,12,4)
+        }
+        { cmoPaperTextLanguage ComboBox Parameters
+          Name = "cmoPaperTextLanguage"
+          MoveScaled(2,18,12,4)
+        }
+        { cmoFirstDay ComboBox Parameters
+          Name = "cmoFirstDay"
+          MoveScaled(2,23,12,4)
+        }
+        { cmoYear ComboBox Parameters
+          Name = "cmoYear"
+          MoveScaled(2,28,12,4)
+        }
+        { cmoMonthInit ComboBox Parameters
+          Name = "cmoMonthInit"
+          MoveScaled(2,33,12,4)
+        }
+        { cmoMonthQty ComboBox Parameters
+          Name = "cmoMonthQty"
+          MoveScaled(2,38,12,4)
+        }
+      }
+    }
+    { Separator4 Separator
+      MoveScaled(1,52,75,0)
+    }
+    { Panel2 Panel
+      MoveScaled(1,54,101,5)
+      Background = Color.Background
+      Arrangement = Arrange.Fill
+      Padding = 5
+      { lblInformation Label
+        MoveScaled(1,0,26,5)
+        Expand = True
+      }
+    }
+  }
+}
