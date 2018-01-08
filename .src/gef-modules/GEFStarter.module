@@ -2,7 +2,7 @@
 
 '
 ' Nuevo ciclo
-' Interface para el programa Pcal
+' Interfaz para programa de la terminal
 '
 ' Copyright (C) Martín Belmonte.
 '
@@ -26,36 +26,11 @@ Public stxProgKey As New String[]
 Public stxProgVal As New String[]
 Public strAppPath As String
 Public strAppName As String
-
-' Public strDBName As String
-' Public stxDBEngines As New String[]
-' Public stxDBPreloaded As New String[]
-' Public strDBDEfault As String
 Public stxPackages As New String[]
-'
-' Public strTemplate As String
-' Public stxTables As New String[]
-'
-' Public stxTableFields As New String[][] ''Lista de campos de las tablas
-'
-' Public stxViews As New String[] ''Lista de vistas
-' Public stxVTitles As New String[][] ' Lista de vistas mejorada con títulos "humanos" e iconos
-' Public stxViewFields As New String[][] ''Lista de campos de las vistas
-' Public stxFTitles As New String[][] ''Lista de títulos de los campos de las vistas y de las tablas
-' Public stxHeaders As New String[] ''<ul><li>0 Acronimo de dos letras "es"</li><li>1 Acronimo de tres letras "spa"</li><li>2 Nombre en inglés "Spanish"</li><li>3 Nombre nativo "Español"</li><li>4 Grupo del idioma "Indo-European"</li><li>5 Alfabeto "Latn" (latino)</li><li>6 Traducir [True/False]</li></ul>
-' Public stxFieldsTableCurrent As New String[] ''lista de campos para crear los botones de filtros
-' Public stxFieldsViewCurrent As New String[] ''lista de campos para crear los botones de filtros
-' 'Public resProgram As Result
-' Public strViewNameSqlCurrent As String
-' Public strViewNameHumanCurrent As String
-' Public strSQLCurrent As String
-'
-' Public stxFieldsToShow As New String[] ' Campos que se mostraran en las listas (gridview) para cada vista se rellena en updategrid cada vez que se selecciona una nueva categoria en el treeview.
-
-'## variables del Programa ##
-'
-'
-'////////////////////////////
+Public stxLang As New String[][]
+Public stxPaper As New String[][]
+Public stxOrie As New String[][]
+Public stxDay As New String[][]
 
 Public Sub Main()
 
@@ -82,7 +57,18 @@ Public Sub Main()
     Copy "template.cfg" To strAppPath &/ "template.cfg"
   Endif
 
-  ' Carga de los parametros del prgrama conjuntamente con gb.settings./////////////////////////
+  ' Carga de los parámetros del prgrama conjuntamente con gb.settings./////////////////////////
+  stxLang.Clear
+  stxLang.Insert(LoadLang())
+
+  stxPaper.Clear
+  stxPaper.Insert(LoadPaper())
+
+  stxOrie.Clear
+  stxOrie.Insert(LoadOrie())
+
+  stxDay.Clear
+  stxDay.Insert(LoadDay())
 
   If Initiator() = 1 Then
     For intKey = 0 To stxProgKey.Max
@@ -103,26 +89,48 @@ Public Sub Main()
 
 End
 
-Public Function Initiator() As Integer  ''Funcion que carga los parametros por defecto del programa. 1 ok, 0 Matrices iguales pero no se cargo todo -1 matrices distintas
+Public Function Initiator() As Integer  ''Funcion que carga los parámetros por defecto del programa. 1 ok, 0 Matrices iguales pero no se cargo todo -1 matrices distintas
 
   Dim int As Integer
+  Dim intSize As Integer
 
-  For int = 0 To 11
+  For int = 0 To 12
 
     stxProgKey.Add("")
     stxProgVal.Add("")
   Next
 
   stxProgKey[0] = "Program/Paper-Size"
-  stxProgVal[0] = Settings[stxProgKey[0], "a4"]
+  If IsNumber(Settings[stxProgKey[0], ""]) = True Then
+    stxProgVal[0] = Settings[stxProgKey[0], ""]
+  Else
+    stxProgVal[0] = 2
+  Endif
 
   stxProgKey[1] = "Program/Paper-Orientation"
-  stxProgVal[1] = Settings[stxProgKey[1], strAppPath]
+  If IsNumber(Settings[stxProgKey[1], ""]) = True Then
+    stxProgVal[1] = Settings[stxProgKey[1], ""]
+  Else
+    stxProgVal[1] = 1
+  Endif
+  'stxProgVal[1] = Settings[stxProgKey[1], ""]
 
   stxProgKey[2] = "Program/Text-Language"
-  stxProgVal[2] = Settings[stxProgKey[2], ""]
+  If IsNumber(Settings[stxProgKey[2], ""]) = True Then
+    stxProgVal[2] = Settings[stxProgKey[2], ""]
+  Else
+    stxProgVal[2] = 21
+  Endif
+  'stxProgVal[2] = Settings[stxProgKey[2], ""]
 
   stxProgKey[3] = "Program/First-Day"
+  If IsNumber(Settings[stxProgKey[3], ""]) = True Then
+
+    stxProgVal[3] = Settings[stxProgKey[3], ""]
+  Else
+    stxProgVal[3] = 0
+  Endif
+
   stxProgVal[3] = Settings[stxProgKey[3], ""]
 
   stxProgKey[4] = "Program/Font-Type-1"
@@ -149,11 +157,82 @@ Public Function Initiator() As Integer  ''Funcion que carga los parametros por d
   stxProgKey[11] = "Program/Month-Qty"
   stxProgVal[11] = Settings[stxProgKey[11], ""]
 
+  stxProgKey[12] = "Program/Last-Directory"
+  stxProgVal[12] = Settings[stxProgKey[12], ""]
+
   If stxProgKey.Max = stxProgVal.Max Then
     Return 1
   Else
     Return 0
   Endif
+
+End
+
+Public Function LoadLang() As String[][] ''Carga las listaas de lenguajes disponibles.
+
+  Dim stx As New String[][]
+
+  stx.Add(["catalan", ("Catalán"), "ca"])
+  stx.Add(["czech", ("Checo"), "cs"])
+  stx.Add(["danish", ("Danés"), "da"])
+  stx.Add(["dutch", ("Holandés"), "nl"])
+  stx.Add(["english", ("Inglés"), "en"])
+  stx.Add(["esperanto", ("Esperanto"), "eo"])
+  stx.Add(["estonian", ("Estonio"), "et"])
+  stx.Add(["finnish", ("Finlandés"), "fi"])
+  stx.Add(["french", ("Francés"), "fr"])
+  stx.Add(["german", ("Alemán"), "de"])
+  stx.Add(["greek", ("Griego"), "el"])
+  stx.Add(["hawaiian", ("Hawaiano"), "haw"])
+  stx.Add(["hungarian", ("Húngaro"), "hu"])
+  stx.Add(["italian", ("Italiano"), "it"])
+  stx.Add(["latvian", ("Letón"), "lv"])
+  stx.Add(["lithuanian", ("Lituano"), "lt"])
+  stx.Add(["polish", ("Polaco"), "pl"])
+  stx.Add(["portuguese", ("Portugués"), "pt"])
+  stx.Add(["romanian", ("Rumano"), "ro"])
+  stx.Add(["russian", ("Ruso"), "ru"])
+  stx.Add(["slovak", ("Eslovaco"), "sk"])
+  stx.Add(["spanish", ("Español"), "es"])
+  stx.Add(["swedish", ("Sueco"), "sv"])
+  stx.Add(["ukrainian", ("Ucraniano"), "uk"])
+
+  Return stx
+
+End
+
+Public Function LoadPaper() As String[][] ''Carga la lista de formatos de hojas.
+
+  Dim stx As New String[][]
+
+  stx.Add(["letter", ("Carta"), "215.9 × 279.4"])
+  stx.Add(["legal", ("Legal"), "215.9 × 355.6"])
+  stx.Add(["a4", ("A4"), "210 × 297"])
+  stx.Add(["tabloid", ("Doble carta"), "279.4 × 431.8"])
+
+  Return stx
+
+End
+
+Public Function LoadOrie() As String[][] ''Carga la lista de orientaciones de las hojas.
+
+  Dim stx As New String[][]
+
+  stx.Add(["portait", ("Retrato"), "0º"])
+  stx.Add(["landscape", ("Apaisada"), "90º"])
+
+  Return stx
+
+End
+
+Public Function LoadDay() As String[][] ''Carga la lista de dias suceptibles de ser el inicio de la semana.
+
+  Dim stx As New String[][]
+
+  stx.Add(["monday", ("Lunes"), "0"])
+  stx.Add(["sunday", ("Domingo"), "6"])
+
+  Return stx
 
 End
 
@@ -246,7 +325,7 @@ End
 Public Function Terminator() As Integer ''Funcion que guarda las configuraciones que se modificaron en el programa antes de cerrarlo.
 
   Dim int As Integer
-  ' Guardando los parametros del programa
+  ' Guardando los parámetros del programa
   For int = 0 To stxProgKey.Max
     Settings[stxProgKey[int]] = stxProgVal[int]
     Print "Guardando: " & stxProgKey[int] & ": " & stxProgVal[int]

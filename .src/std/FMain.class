@@ -2,7 +2,7 @@
 
 '
 ' Nuevo ciclo
-' Interface para el programa Pcal
+' Interfaz para programa de la terminal
 '
 ' Copyright (C) Martín Belmonte.
 '
@@ -21,6 +21,7 @@
 ' Foundation, Inc., 51 Franklin St, Fifth Floor,
 ' Boston, MA  02110-1301  USA
 '
+
 Private intYear As Integer
 Private intInit As Integer
 Private intQty As Integer
@@ -35,10 +36,12 @@ Private bolLoaded As Boolean
 Public Sub Form_Open()
 
   Dim int As Integer
+  Dim strSize As String
+  Dim strOrie As String
+  Dim strLang As String
+  Dim strDay As String
 
   hzsData.Layout = [1, 4, 1]
-
-  'ShowData(GEFStarter.stxVTitles)
 
   intYear = CInt(Format(Now(), "yyyy"))
 
@@ -60,30 +63,42 @@ Public Sub Form_Open()
 
   cmoMonthQty.Text = "12"
 
-  cmoPaperSize.Add("a4")
-  cmoPaperSize.Add("letter")
+  For int = 0 To GEFStarter.stxPaper.Max
+    strSize = GEFStarter.stxPaper[int][1]
+    cmoPaperSize.Add(strSize)
+    Select CStr(int)
+      Case Settings[GEFStarter.stxProgKey[0], ""]
+        GEFStarter.stxProgVal[0] = CStr(int)
+        cmoPaperSize.Text = strSize
+    End Select
+  Next
 
-  cmoPaperSize.Text = "a4"
-  GEFStarter.stxProgVal[0] = "a4"
+  For int = 0 To GEFStarter.stxOrie.Max
+    strOrie = GEFStarter.stxOrie[int][1]
+    cmoPaperOrientation.Add(strOrie)
+  Next
+  cmoPaperOrientation.Text = GEFStarter.stxOrie[1][1]
+  GEFStarter.stxProgVal[1] = 0
 
-  cmoPaperOrientation.Add("landscape")
-  cmoPaperOrientation.Add("portait")
+  For int = 0 To GEFStarter.stxLang.Max
+    strLang = GEFStarter.stxLang[int][1]
+    cmoPaperTextLanguage.Add(strLang)
+    Select String.LCase(GEFStarter.stxLang[int][0])
+      Case "spanish"
+        GEFStarter.stxProgVal[2] = CStr(int)
+        cmoPaperTextLanguage.Text = strLang
+    End Select
+  Next
 
-  cmoPaperOrientation.Text = "landscape"
-  GEFStarter.stxProgVal[1] = "landscape"
-
-  cmoPaperTextLanguage.Add("es")
-  cmoPaperTextLanguage.Add("fr")
-  cmoPaperTextLanguage.Add("it")
-  cmoPaperTextLanguage.Add("pr")
-
-  cmoPaperTextLanguage.Text = "es"
-  GEFStarter.stxProgVal[2] = "es"
-
-  cmoFirstDay.Add("moonday")
-  cmoFirstDay.Add("sunday")
-  cmoFirstDay.Text = "monday"
-  GEFStarter.stxProgVal[3] = "monday"
+  For int = 0 To GEFStarter.stxDay.Max
+    strDay = GEFStarter.stxDay[int][1]
+    cmoFirstDay.Add(strDay)
+    Select String.LCase(GEFStarter.stxDay[int][0])
+      Case "monday"
+        GEFStarter.stxProgVal[3] = CStr(int)
+        cmoFirstDay.Text = strDay
+    End Select
+  Next
 
 End
 
@@ -124,7 +139,7 @@ Public Sub Form_Close()
   If GEFStarter.Terminator() = 1 Then
     Me.Close
   Else
-    Message.Error("No se han podido guardar los parametros del programa")
+    Message.Error("No se han podido guardar los parámetros del programa")
   Endif
 
 End
@@ -136,6 +151,22 @@ End
 '## Función principal que interactiua con pcal
 
 Public Function CreateConf() ''Crea el archivo de configuracion que se utilizara para crear el calendario
+
+  If cmoPaperSize.Index > -1 Then
+    GEFStarter.stxProgVal[0] = cmoPaperSize.Index
+  Endif
+
+  If cmoPaperOrientation.Index > -1 Then
+    GEFStarter.stxProgVal[1] = cmoPaperOrientation.Index
+  Endif
+
+  If cmoPaperTextLanguage.Index > -1 Then
+    GEFStarter.stxProgVal[2] = cmoPaperTextLanguage.Index
+  Endif
+
+  If cmoFirstDay.Index > -1 Then
+    GEFStarter.stxProgVal[3] = cmoFirstDay.Index
+  Endif
 
   GEFStarter.stxProgVal[9] = cmoYear.Text
   GEFStarter.stxProgVal[10] = cmoMonthInit.Text
@@ -163,22 +194,29 @@ Public Function LoadCalendar()
   Dim strCmd As String
   Dim img As Image
   Dim pio As Picture
-
   Dim intNpage, intWidthPage, intHeightPage As Integer
+  Dim strPage As String
+  Dim strOrie As String
+  Dim strLang As String
+  Dim strDay As String
+
+  strPage = GEFStarter.stxPaper[CInt(GEFStarter.stxProgVal[0])][0]
+  strOrie = GEFStarter.stxOrie[CInt(GEFStarter.stxProgVal[1])][0]
+  strLang = GEFStarter.stxLang[CInt(GEFStarter.stxProgVal[2])][2]
+  strDay = GEFStarter.stxDay[CInt(GEFStarter.stxProgVal[3])][0]
 
   tobPrint.Enabled = False
 
   CreateConf()
   strCmd = "pcal"
-  'strCmd &= strSeed & " -o "
-  strCmd &= " -P " & GEFStarter.stxProgVal[0]
+  strCmd &= " -P " & strPage
 
-  Select GEFStarter.stxProgVal[1]
+  Select strOrie
     Case "landscape"
       strCmd &= " -l"
   End Select
-  strCmd &= " -a " & GEFStarter.stxProgVal[2]
-  strCmd &= " -F " & GEFStarter.stxProgVal[3]
+  strCmd &= " -a " & strLang
+  strCmd &= " -F " & strDay
   strCmd &= " -d Times-Roman/18"
   strCmd &= " -t Times-Roman/30"
   strCmd &= " -n Times-Roman/10"
@@ -207,6 +245,8 @@ Public Function LoadCalendar()
 
     Wait 0.01
     pix.Picture = pio
+    pix.W = pnlCalendar.W
+    pix.H = pnlCalendar.W * 0.7071
     pix.Refresh
     tobPrint.Enabled = True
   Else
@@ -229,7 +269,7 @@ Public Sub Form_Activate()
   intW = (Me.W / 6) * 4
   intH = intW * 0.7071
 
-  bolLoaded = True
+  'bolLoaded = True
 
   CreateConf()
 
@@ -252,8 +292,8 @@ End
 Public Sub Reset()
 
   If Message.Question(
-      ("¿Desea restablecer los parametros originales?") & gb.NewLine &
-      ("Tenga en cuenta que si acepta los cambios que usted haya realizado en la configuracion se perderan."), "Aceptar", "Cancelar") = 1 Then
+      ("¿Desea restablecer los parámetros originales?") & gb.NewLine &
+      ("Tenga en cuenta que si acepta los cambios que usted haya realizado en la configuracion se perderan") & ".", "Aceptar", "Cancelar") = 1 Then
     If Exist(GEFStarter.strAppPath) = True Then
       Shell "rm -r " & GEFStarter.strAppPath Wait
       Me.Close
@@ -262,5 +302,46 @@ Public Sub Reset()
     Endif
 
   Endif
+
+End
+
+Public Sub mnuSaveas_Click()
+
+  Saveas(strProd)
+
+End
+
+Public Function Saveas(strFile As String)
+
+  Dim strSave As String
+
+  If Exist(strFile) = True Then
+    If Exist(GEFStarter.stxProgVal[12]) = True Then
+      Dialog.Path = GEFStarter.stxProgVal[12]
+    Else
+      Dialog.Path = User.Home &/ "."
+    Endif
+    Dialog.Title = ("Guardar como")
+    Dialog.Filter = ["*.pdf", "Portable document format"]
+    Dialog.SaveFile()
+    strSave = Dialog.Path
+
+    Select File.Ext(strSave)
+
+      Case "pdf", "PDF"
+        GEFStarter.stxProgVal[12] = File.Dir(strSave)
+
+        Copy strFile To strSave
+
+      Case Else
+        Message.Info("Debe asignar una extensión de archivo adecuada")
+    End Select
+  Endif
+
+End
+
+Public Sub tobSaveAs_Click()
+
+  Saveas(strProd)
 
 End

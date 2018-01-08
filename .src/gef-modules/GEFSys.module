@@ -1,8 +1,8 @@
 ' Gambas module file
 
 '
-' Gambas extra functions
-' Compilation of utilities and functions developed by the gambas comunity.
+' Nuevo ciclo
+' Interfaz para programa de la terminal
 '
 ' Copyright (C) Martín Belmonte.
 '
@@ -686,7 +686,7 @@ Public Function XDGFolder() As String[] ''Devuelve una matriz de texto con las r
 
 End
 
-Public Function PkgDep(stxPackages As String[]) As String[] ''Verifica si los paqutes que se le pasan como parametros en una matriz, estan instalados en el sistema, devuelve una matriz con los paquetes que no estan instalados, si todo lo estuviera la matriz devuelta estara vacia.
+Public Function PkgDep(stxPackages As String[]) As String[] ''Verifica si los paqutes que se le pasan como parámetros en una matriz, estan instalados en el sistema, devuelve una matriz con los paquetes que no estan instalados, si todo lo estuviera la matriz devuelta estara vacia.
 
   Dim intPkg As Integer
   Dim stxMissing As New String[] ' Lista de paquetes que falta instalar

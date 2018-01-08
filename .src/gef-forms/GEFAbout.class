@@ -2,9 +2,9 @@
 
 '
 ' Nuevo ciclo
-' Interface para el programa Pcal
+' Interfaz para programa de la terminal
 '
-' Copyright (C) Martín Belmonte
+' Copyright (C) Martín Belmonte.
 '
 ' This program is free software; you can redistribute it and/or modify
 ' it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ Public Sub Form_Open()
   '///////////
   tob = New ToolButton(pnlAbout) As "Url"
   tob.Name = "tob-" & "Web"
-  tob.Text = ("Pagina web") & ": https://github.com/" & String.LCase(stxInfo[3]) &/ String.LCase(Application.Name)
+  tob.Text = ("Página web") & ": https://github.com/" & String.LCase(stxInfo[3]) &/ String.LCase(Application.Name)
   tob.Tag = "https://github.com/" & String.LCase(stxInfo[3]) &/ String.LCase(Application.Name)
   tob.Font.Grade = 0
   tob.Height = 28
@@ -194,7 +194,7 @@ End
 '     '///////////
 '     tob = New ToolButton(pnlAbout) As "Url"
 '     tob.Name = "tob-" & "Web"
-'     tob.Text = ("Pagina web") & ": https://github.com/" & String.LCase(stxInfo[3]) &/ String.LCase(Application.Name)
+'     tob.Text = ("Página web") & ": https://github.com/" & String.LCase(stxInfo[3]) &/ String.LCase(Application.Name)
 '     tob.Tag = "https://github.com/" & String.LCase(stxInfo[3]) &/ String.LCase(Application.Name)
 '     tob.Font.Grade = 0
 '     tob.Height = 28

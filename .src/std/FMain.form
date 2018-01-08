@@ -13,6 +13,10 @@
       Text = ("Nuevo calendario")
       Picture = Picture["icon:/22/new"]
     }
+    { mnuSaveas Menu
+      Text = ("Guardar archivo")
+      Picture = Picture["icon:/22/save-as"]
+    }
     { mnuConfig Menu
       Text = ("Configuración")
       Picture = Picture["icon:/22/properties"]
@@ -60,8 +64,13 @@
       ToolTip = ("Nuevo")
       Picture = Picture["icon:/22/new"]
     }
+    { tobSaveAs ToolButton
+      MoveScaled(5,0,5,5)
+      ToolTip = ("Nuevo")
+      Picture = Picture["icon:/22/save-as"]
+    }
     { tobPrint ToolButton
-      MoveScaled(7,0,5,5)
+      MoveScaled(12,0,5,5)
       Enabled = False
       ToolTip = ("Imprimir")
       Picture = Picture["icon:/22/print"]
@@ -119,6 +128,7 @@
         Arrangement = Arrange.Row
         { pix PictureBox
           MoveScaled(10,22,16,16)
+          Stretch = True
           AutoResize = True
         }
       }

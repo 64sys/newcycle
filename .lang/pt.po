@@ -1,0 +1,340 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: tradukisto 0.1.0\n"
+"POT-Creation-Date: 2018-01-08 12:29 UTC\n"
+"PO-Revision-Date: 2018-01-08 00:28+CET\n"
+"Last-Translator: Martín Belmonte, Powerded by Tradukisto software. info@belmotek.net\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:1
+msgid "Nuevo ciclo"
+msgstr "Novo ciclo"
+
+#: .project:2
+msgid "Interfaz para programa de la terminal"
+msgstr "Interface para o programa do terminal"
+
+#: FMain.class:296
+msgid "Tenga en cuenta que si acepta los cambios que usted haya realizado en la configuracion se perderan"
+msgstr ""
+
+#: FMain.class:296
+msgid "¿Desea restablecer los parámetros originales?"
+msgstr "Deseja restaurar os parâmetros originais?"
+
+#: FMain.class:324 GEFDesk.module:67
+msgid "Guardar como"
+msgstr "Salvar como"
+
+#: FMain.form:55
+msgid "Nuevo calendario"
+msgstr "Novo calendário"
+
+#: FMain.form:60
+msgid "Guardar archivo"
+msgstr "Salvar arquivo"
+
+#: FMain.form:65
+msgid "Configuración"
+msgstr "Configuração"
+
+#: FMain.form:71
+msgid "Imprimir"
+msgstr "Imprimir"
+
+#: FMain.form:76
+msgid "Restablecer parametros"
+msgstr "Repor parâmetros"
+
+#: FMain.form:81
+msgid "Terminal"
+msgstr "Terminal"
+
+#: FMain.form:87
+msgid "Salir"
+msgstr "Sair"
+
+#: FMain.form:93
+msgid "Información"
+msgstr "Informação"
+
+#: FMain.form:96
+msgid "Manual de ayuda"
+msgstr "Manual de ajuda"
+
+#: FMain.form:101
+msgid "Manual para el desarrollador"
+msgstr "Manual do desenvolvedor"
+
+#: FMain.form:107 GEFAbout.class:141
+msgid "Acerca de"
+msgstr "Sobre"
+
+#: FMain.form:118
+msgid "Nuevo"
+msgstr "Novo"
+
+#: GEFAbout.class:83
+msgid "Página web"
+msgstr "Pagina web"
+
+#: GEFAbout.class:88
+msgid "Código fuente"
+msgstr ""
+
+#: GEFAbout.class:92
+msgid "Correo de contacto"
+msgstr ""
+
+#: GEFAbout.class:98
+msgid "Enviar un correo al desarrollador"
+msgstr ""
+
+#: GEFAbout.class:102
+msgid "Componentes utilizados en este programa"
+msgstr ""
+
+#: GEFAbout.class:117
+msgid "Clic para ver detalles en"
+msgstr ""
+
+#: GEFAbout.class:127
+msgid "Este programa se entrega sin ningún tipo de garantía"
+msgstr ""
+
+#: GEFAbout.class:134
+msgid "Licencia"
+msgstr "Licença"
+
+#: GEFAbout.class:135
+msgid "Clic para ver la licencia en"
+msgstr ""
+
+#: GEFAbout.class:275
+msgid "Hola desarrolladores de"
+msgstr ""
+
+#: GEFAbout.form:88
+msgid "Cerrar"
+msgstr ""
+
+#: GEFDesk.module:38
+msgid "Seleccionar archivo"
+msgstr "Selecione o arquivo"
+
+#: GEFDesk.module:47
+msgid "Filtro"
+msgstr ""
+
+#: GEFDesk.module:91
+msgid "Seleccionar directorio"
+msgstr "Selecione o diretório"
+
+#: GEFDesk.module:146
+msgid "Hola"
+msgstr "Olá"
+
+#: GEFStarter.module:175
+msgid "Catalán"
+msgstr ""
+
+#: GEFStarter.module:176
+msgid "Checo"
+msgstr ""
+
+#: GEFStarter.module:177
+msgid "Danés"
+msgstr ""
+
+#: GEFStarter.module:178
+#, fuzzy
+msgid "Holandés"
+msgstr "Olá"
+
+#: GEFStarter.module:179
+msgid "Inglés"
+msgstr ""
+
+#: GEFStarter.module:180
+msgid "Esperanto"
+msgstr ""
+
+#: GEFStarter.module:181
+msgid "Estonio"
+msgstr ""
+
+#: GEFStarter.module:182
+msgid "Finlandés"
+msgstr ""
+
+#: GEFStarter.module:183
+msgid "Francés"
+msgstr ""
+
+#: GEFStarter.module:184
+msgid "Alemán"
+msgstr ""
+
+#: GEFStarter.module:185
+msgid "Griego"
+msgstr ""
+
+#: GEFStarter.module:186
+msgid "Hawaiano"
+msgstr ""
+
+#: GEFStarter.module:187
+msgid "Húngaro"
+msgstr ""
+
+#: GEFStarter.module:188
+msgid "Italiano"
+msgstr ""
+
+#: GEFStarter.module:189
+msgid "Letón"
+msgstr ""
+
+#: GEFStarter.module:190
+msgid "Lituano"
+msgstr ""
+
+#: GEFStarter.module:191
+msgid "Polaco"
+msgstr ""
+
+#: GEFStarter.module:192
+msgid "Portugués"
+msgstr ""
+
+#: GEFStarter.module:193
+msgid "Rumano"
+msgstr ""
+
+#: GEFStarter.module:194
+msgid "Ruso"
+msgstr ""
+
+#: GEFStarter.module:195
+msgid "Eslovaco"
+msgstr ""
+
+#: GEFStarter.module:196
+msgid "Español"
+msgstr ""
+
+#: GEFStarter.module:197
+msgid "Sueco"
+msgstr ""
+
+#: GEFStarter.module:198
+msgid "Ucraniano"
+msgstr ""
+
+#: GEFStarter.module:208
+msgid "Carta"
+msgstr ""
+
+#: GEFStarter.module:209
+msgid "Legal"
+msgstr ""
+
+#: GEFStarter.module:210
+msgid "A4"
+msgstr ""
+
+#: GEFStarter.module:211
+msgid "Doble carta"
+msgstr ""
+
+#: GEFStarter.module:221
+msgid "Retrato"
+msgstr ""
+
+#: GEFStarter.module:222
+msgid "Apaisada"
+msgstr ""
+
+#: GEFStarter.module:232
+msgid "Lunes"
+msgstr ""
+
+#: GEFStarter.module:233
+msgid "Domingo"
+msgstr ""
+
+#: GEFStarter.module:244
+msgid "Debes instalar los siguientes paquetes"
+msgstr ""
+
+#: GEFSys.module:570
+msgid "Desconocido"
+msgstr ""
+
+#: GEFUtility.module:519
+msgid "Autor"
+msgstr "Autor"
+
+#: GEFUtility.module:520
+msgid "Proveedor"
+msgstr "Provedor"
+
+#: GEFUtility.module:521
+msgid "Versión"
+msgstr "Versão"
+
+#: GEFUtility.module:522
+msgid "Fecha de este documento"
+msgstr ""
+
+#: GEFUtility.module:523
+msgid "Componentes"
+msgstr ""
+
+#: GEFUtility.module:525
+msgid "esta formado por"
+msgstr "É formado por"
+
+#: GEFUtility.module:525
+msgid "métodos"
+msgstr "Métodos"
+
+#: GEFUtility.module:525
+msgid "módulos"
+msgstr "Módulos"
+
+#: GEFUtility.module:1791
+msgid "El archivo"
+msgstr ""
+
+#: GEFUtility.module:1791
+msgid "Tiene caracteres no compatibles con"
+msgstr "Tem caracteres não compatíveis com"
+
+#: GEFValidator.module:301
+msgid "Espacios al inicio y al final"
+msgstr ""
+
+#: GEFValidator.module:303
+msgid "Espacio al inicio"
+msgstr ""
+
+#: GEFValidator.module:307
+msgid "Espacio al final"
+msgstr ""
+
+#: GEFValidator.module:312
+msgid "Repetidos"
+msgstr "Repetido"
+
+#: GEFValidator.module:339
+msgid "Excluidos"
+msgstr ""
+
+#: GEFValidator.module:343
+msgid "Mas de una letra mayúscula"
+msgstr "Mais de uma letra maiúscula"

@@ -1,0 +1,211 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: tradukisto 0.1.0\n"
+"POT-Creation-Date: 2018-01-07 21:29 UTC\n"
+"PO-Revision-Date: 2018-01-07 22:27+CET\n"
+"Last-Translator: Martín Belmonte, Powerded by Tradukisto software. info@belmotek.net\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:1
+msgid "Nuevo ciclo"
+msgstr ""
+
+#: .project:2
+msgid "Interface para el programa Pcal"
+msgstr "Interface pour le programme pcal"
+
+#: FMain.class:256
+msgid "Tenga en cuenta que si acepta los cambios que usted haya realizado en la configuracion se perderan."
+msgstr ""
+
+#: FMain.class:256
+msgid "¿Desea restablecer los parametros originales?"
+msgstr ""
+
+#: FMain.class:284 GEFDesk.module:67
+msgid "Guardar como"
+msgstr ""
+
+#: FMain.form:55
+msgid "Nuevo calendario"
+msgstr ""
+
+#: FMain.form:60
+msgid "Guardar archivo"
+msgstr "Enregistrer le fichier"
+
+#: FMain.form:65
+msgid "Configuración"
+msgstr "Configuration"
+
+#: FMain.form:71
+msgid "Imprimir"
+msgstr "Imprimer"
+
+#: FMain.form:76
+msgid "Restablecer parametros"
+msgstr ""
+
+#: FMain.form:81
+msgid "Terminal"
+msgstr ""
+
+#: FMain.form:87
+msgid "Salir"
+msgstr "Sortir"
+
+#: FMain.form:93
+msgid "Información"
+msgstr "Information"
+
+#: FMain.form:96
+msgid "Manual de ayuda"
+msgstr ""
+
+#: FMain.form:101
+msgid "Manual para el desarrollador"
+msgstr ""
+
+#: FMain.form:107 GEFAbout.class:141
+msgid "Acerca de"
+msgstr "À propos de"
+
+#: FMain.form:118
+msgid "Nuevo"
+msgstr ""
+
+#: GEFAbout.class:83
+msgid "Pagina web"
+msgstr "Page web"
+
+#: GEFAbout.class:88
+msgid "Código fuente"
+msgstr "Code source"
+
+#: GEFAbout.class:92
+msgid "Correo de contacto"
+msgstr "Contact email"
+
+#: GEFAbout.class:98
+msgid "Enviar un correo al desarrollador"
+msgstr "Envoyer un email au développeur"
+
+#: GEFAbout.class:102
+msgid "Componentes utilizados en este programa"
+msgstr "Les composants utilisés dans ce programme,"
+
+#: GEFAbout.class:117
+msgid "Clic para ver detalles en"
+msgstr "Cliquez ici pour voir les détails"
+
+#: GEFAbout.class:127
+msgid "Este programa se entrega sin ningún tipo de garantía"
+msgstr ""
+
+#: GEFAbout.class:134
+msgid "Licencia"
+msgstr "Licence"
+
+#: GEFAbout.class:135
+msgid "Clic para ver la licencia en"
+msgstr "Cliquez pour voir sous licence"
+
+#: GEFAbout.class:275
+msgid "Hola desarrolladores de"
+msgstr "Développeurs hi"
+
+#: GEFAbout.form:88
+msgid "Cerrar"
+msgstr "Fermer"
+
+#: GEFDesk.module:38
+msgid "Seleccionar archivo"
+msgstr "Sélectionnez le fichier"
+
+#: GEFDesk.module:47
+msgid "Filtro"
+msgstr "Filtre"
+
+#: GEFDesk.module:91
+msgid "Seleccionar directorio"
+msgstr "Sélectionner le répertoire"
+
+#: GEFDesk.module:146
+msgid "Hola"
+msgstr "Salut"
+
+#: GEFStarter.module:168
+msgid "Debes instalar los siguientes paquetes"
+msgstr ""
+
+#: GEFSys.module:570
+msgid "Desconocido"
+msgstr "Inconnu"
+
+#: GEFUtility.module:518
+msgid "Autor"
+msgstr ""
+
+#: GEFUtility.module:519
+msgid "Proveedor"
+msgstr ""
+
+#: GEFUtility.module:520
+msgid "Versión"
+msgstr ""
+
+#: GEFUtility.module:521
+msgid "Fecha de este documento"
+msgstr ""
+
+#: GEFUtility.module:522
+msgid "Componentes"
+msgstr ""
+
+#: GEFUtility.module:524
+msgid "esta formado por"
+msgstr ""
+
+#: GEFUtility.module:524
+msgid "métodos"
+msgstr ""
+
+#: GEFUtility.module:524
+msgid "módulos"
+msgstr ""
+
+#: GEFUtility.module:1790
+msgid "El archivo"
+msgstr "L`archive"
+
+#: GEFUtility.module:1790
+msgid "Tiene caracteres no compatibles con"
+msgstr ""
+
+#: GEFValidator.module:318
+msgid "Espacios al inicio y al final"
+msgstr "Les espaces au début et à la fin"
+
+#: GEFValidator.module:320
+msgid "Espacio al inicio"
+msgstr "Espace au début"
+
+#: GEFValidator.module:324
+msgid "Espacio al final"
+msgstr "Espace à la fin"
+
+#: GEFValidator.module:329
+msgid "Repetidos"
+msgstr "Répété"
+
+#: GEFValidator.module:356
+msgid "Excluidos"
+msgstr "Exclu"
+
+#: GEFValidator.module:360
+msgid "Mas de una letra mayúscula"
+msgstr ""

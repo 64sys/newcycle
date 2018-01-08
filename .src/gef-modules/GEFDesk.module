@@ -1,10 +1,10 @@
 ' Gambas module file
 
 '
-' Gambas extra functions
-' Compilation of utilities and functions developed by the gambas comunity.
+' Nuevo ciclo
+' Interfaz para programa de la terminal
 '
-' Copyright (C) Martín Belmonte
+' Copyright (C) Martín Belmonte.
 '
 ' This program is free software; you can redistribute it and/or modify
 ' it under the terms of the GNU General Public License as published by
@@ -51,6 +51,30 @@ Public Function FileChooser(Optional strInputPath As String, Optional strFilter 
     stxFilepaths = Dialog.Paths
   Endif
   Return stxFilepaths
+
+End
+
+Public Function SaveFile(Optional stInputPath As String, Optional strFilter As String) As String  ''Abre una caja de dialogo para guardar un archivo en un directorio.
+
+  Dim stDirPath As String
+
+  If stInputPath = "" Then
+    stInputPath = User.Home
+  Else
+    Dialog.Path = stInputPath
+  Endif
+
+  Dialog.Title = ("Guardar como")
+  Select strFilter
+    Case ""
+      Dialog.Filter = ["*.*", "Todos los archivos"]
+    Case Else
+      Dialog.Filter = ["*." & strFilter]
+  End Select
+
+  If Dialog.SaveFile() Then
+    Return Dialog.Path
+  Endif
 
 End
 
